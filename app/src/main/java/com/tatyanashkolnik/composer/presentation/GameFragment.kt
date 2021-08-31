@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.tatyanashkolnik.composer.R
 import com.tatyanashkolnik.composer.databinding.FragmentGameBinding
 import com.tatyanashkolnik.composer.domain.entity.GameResult
@@ -14,7 +15,9 @@ import java.lang.RuntimeException
 
 class GameFragment : Fragment() {
 
-    private lateinit var level : Level
+    private lateinit var level: Level
+
+    private lateinit var gameViewModel: GameViewModel
 
     private var _binding: FragmentGameBinding? = null
     private val binding: FragmentGameBinding
@@ -25,35 +28,55 @@ class GameFragment : Fragment() {
         parseArgs()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentGameBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val testGameResult = GameResult(
-            true,
-            2,
-            2,
-            GameSettings(
-                0,
-                1,
-                2,
-                3
-            )
-        )
-        binding.tvSum.setOnClickListener { launchGameResultFragment(testGameResult) }
+
+        gameViewModel = ViewModelProvider(requireActivity()).get(GameViewModel::class.java)
+
+        val gameSettings = gameViewModel.getGameSettings()
+
+        inflateViews(gameSettings)
+        observeViewModel()
+
+//        val testGameResult = GameResult(
+//            true,
+//            2,
+//            2,
+//            GameSettings(
+//                0,
+//                1,
+//                2,
+//                3
+//            )
+//        )
+//        binding.tvSum.setOnClickListener { launchGameResultFragment(testGameResult) }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+
+    private fun inflateViews(gameSettings: GameSettings) {
+        with(binding) {
+            tvProgress.text =
+                gameSettings.minCountOfRightAnswers.toString().format(R.string.progress_answers)
+        }
     }
+
+    private fun observeViewModel() {
+        TODO("Not yet implemented")
+    }
+
 
     private fun parseArgs() {
-        level = requireArguments().getSerializable(KEY_LEVEL) as Level
+        requireArguments().getParcelable<Level>(KEY_LEVEL)?.let {
+            level = it
+        }
     }
 
     private fun launchGameResultFragment(gameResult: GameResult) {
@@ -64,12 +87,17 @@ class GameFragment : Fragment() {
             .commit()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     companion object {
 
         const val NAME = "GameFragment"
         const val KEY_LEVEL = "level"
 
-        fun newInstance(level: Level): GameFragment{
+        fun newInstance(level: Level): GameFragment {
             return GameFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(KEY_LEVEL, level)// enum неявно реализует интерфейс Serializable

@@ -21,11 +21,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/btn_retry"
         app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_require_right_answer_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -35,7 +35,7 @@
             android:text="@string/required_score" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -44,16 +44,16 @@
             android:text="@string/score_answers" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tv_require_right_answer_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="20dp"
-            android:text="@string/score_percentage" />
+            android:text="@string/required_percentage" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tv_right_answer_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -64,7 +64,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_retry"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

@@ -42,6 +42,7 @@ class GameResultFragment : Fragment() {
                         retryGame()                       // уничтожался, отключался слушатель
                     }
                 })
+        binding.btnRetry.setOnClickListener { retryGame() }
     }
 
     override fun onDestroyView() {
@@ -50,7 +51,9 @@ class GameResultFragment : Fragment() {
     }
 
     private fun parseArguments() {
-        gameResult = requireArguments().getSerializable(KEY_GAME_RESULT) as GameResult
+        requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT)?.let {
+            gameResult = it
+        }
     }
 
     private fun retryGame() {
@@ -68,7 +71,7 @@ class GameResultFragment : Fragment() {
         fun newInstance(gameResult: GameResult): GameResultFragment {
             return GameResultFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(KEY_GAME_RESULT, gameResult)
+                    putParcelable(KEY_GAME_RESULT, gameResult)
                 }
             }
         }
