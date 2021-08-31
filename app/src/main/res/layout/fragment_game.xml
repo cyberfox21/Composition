@@ -7,28 +7,26 @@
 
     <TextView
         android:id="@+id/tv_sum"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="0dp"
         android:background="@drawable/circle"
         android:gravity="center"
-        android:padding="36dp"
         android:text="40"
-        android:textSize="36sp"
+        android:padding="8dp"
+        android:textSize="44sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_visible_number"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/tv_visible_number"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="0dp"
         android:background="#C53E93"
         android:gravity="center"
-        android:padding="16dp"
         android:text="15"
         android:layout_marginTop="24dp"
         android:textColor="@color/white"
@@ -36,24 +34,21 @@
         app:layout_constraintBottom_toTopOf="@+id/tv_option1"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/tv_unvisible_number"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_sum" />
 
     <TextView
         android:id="@+id/tv_unvisible_number"
-        android:layout_width="@+id/tv_visible_number"
+        android:layout_width="80dp"
         android:layout_height="0dp"
         android:background="#C53E93"
         android:gravity="center"
-        android:padding="16dp"
         android:text="@string/question_mark"
         android:textColor="@color/white"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_visible_number"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tv_visible_number"
         app:layout_constraintTop_toTopOf="@+id/tv_visible_number" />
 

@@ -58,8 +58,8 @@ class GameResultFragment : Fragment() {
 
     private fun retryGame() {
         requireActivity().supportFragmentManager.popBackStack(
-            GameFragment.NAME,
-            POP_BACK_STACK_INCLUSIVE
+            ChooseLevelFragment.NAME,
+            0
         )
         // 0 чтобы не удалить фрагменты не включительно
     }
