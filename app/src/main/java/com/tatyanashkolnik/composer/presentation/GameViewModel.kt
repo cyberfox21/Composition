@@ -53,7 +53,7 @@ class GameViewModel(application: Application) :
     val enoughPercent: LiveData<Boolean>
         get() = _enoughPercent
 
-    private val _minPercent = MutableLiveData<Int>()
+    private val _minPercent = MutableLiveData<Int>() // серый прогрессбар Secondary
     val minPercent: LiveData<Int>
         get() = _minPercent
 
@@ -68,6 +68,7 @@ class GameViewModel(application: Application) :
         getGameSettings(level)
         startTimer()
         generateQuestion()
+        updateProgress()
     }
 
     private fun getGameSettings(level: Level) {
@@ -97,7 +98,7 @@ class GameViewModel(application: Application) :
         _question.value = generateQuestionUseCase(gameSettings.maxSumValue)
     }
 
-    private fun chooseAnswer(number: Int) {
+    fun chooseAnswer(number: Int) {
         checkAnswer(number)
         updateProgress()
         generateQuestion()
@@ -118,6 +119,7 @@ class GameViewModel(application: Application) :
     }
 
     private fun calculatePercentOfRightAnswers(): Int {
+        if(countOfQuestions == 0) return 0
         return ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
     }
 
