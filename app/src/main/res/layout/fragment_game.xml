@@ -6,12 +6,22 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tv_sum"
+        android:id="@+id/tv_time"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12:00"
+        android:layout_marginTop="16dp"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_sum"
+        android:layout_width="100dp"
         android:layout_height="0dp"
         android:background="@drawable/circle"
         android:gravity="center"
-        android:padding="36dp"
         android:text="40"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_visible_number"
@@ -24,7 +34,7 @@
 
     <TextView
         android:id="@+id/tv_visible_number"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="0dp"
         android:background="#C53E93"
         android:gravity="center"
