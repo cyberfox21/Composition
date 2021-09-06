@@ -1,5 +1,6 @@
 package com.tatyanashkolnik.composer.presentation
 
+import android.app.Application
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -22,10 +23,14 @@ class GameFragment : Fragment() {
 
     private lateinit var level: Level
 
+    private val gameViewModelFactory by lazy {
+        GameViewModelFactory(level, requireActivity().application)
+    }
+
     private val gameViewModel by lazy { // ленивая инициализация
         ViewModelProvider(                            // инициализируется при первом обращении
             this,
-            AndroidViewModelFactory.getInstance(requireActivity().application)
+            gameViewModelFactory
         )[GameViewModel::class.java]
     }
 
@@ -64,7 +69,7 @@ class GameFragment : Fragment() {
 
         observeViewModel()
 
-        gameViewModel.startGame(level)
+        gameViewModel.startGame()
 
     }
 
