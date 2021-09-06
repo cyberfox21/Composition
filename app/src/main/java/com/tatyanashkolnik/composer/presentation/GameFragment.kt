@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.*
+import androidx.navigation.fragment.findNavController
 import com.tatyanashkolnik.composer.R
 import com.tatyanashkolnik.composer.databinding.FragmentGameBinding
 import com.tatyanashkolnik.composer.domain.entity.GameResult
@@ -167,11 +168,10 @@ class GameFragment : Fragment() {
     }
 
     private fun launchGameResultFragment(gameResult: GameResult) {
-        val fragment = GameResultFragment.newInstance(gameResult)
-        requireActivity().supportFragmentManager.beginTransaction()
-            .addToBackStack(null)
-            .replace(R.id.main_container, fragment)
-            .commit()
+        val args = Bundle().apply{
+            putParcelable(GameResultFragment.KEY_GAME_RESULT, gameResult)
+        }
+        findNavController().navigate(R.id.action_gameFragment_to_gameResultFragment, args)
     }
 
     override fun onDestroyView() {

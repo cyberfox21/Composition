@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.navigation.fragment.findNavController
 import com.tatyanashkolnik.composer.R
 import com.tatyanashkolnik.composer.databinding.FragmentGameResultBinding
 import com.tatyanashkolnik.composer.domain.entity.GameResult
@@ -54,14 +55,14 @@ class GameResultFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                retryGame()
-            }
-        }
-        requireActivity().onBackPressedDispatcher // хотим повесить слушатель на кнопку назад
-            .addCallback(viewLifecycleOwner,callback) // очень важно добавить viewLifecycleOwner
-                                        //чтобы когда фрагмент уничтожался, отключался слушатель
+//        val callback = object : OnBackPressedCallback(true) { теперь всё делает Navigation
+//            override fun handleOnBackPressed() {
+//                retryGame()
+//            }
+//        }
+//        requireActivity().onBackPressedDispatcher // хотим повесить слушатель на кнопку назад
+//            .addCallback(viewLifecycleOwner,callback) // очень важно добавить viewLifecycleOwner
+//                                        //чтобы когда фрагмент уничтожался, отключался слушатель
         binding.btnRetry.setOnClickListener { retryGame() }
     }
 
@@ -88,11 +89,14 @@ class GameResultFragment : Fragment() {
     }
 
     private fun retryGame() {
-        requireActivity().supportFragmentManager.popBackStack(
-            GameFragment.NAME,
-            POP_BACK_STACK_INCLUSIVE
-        )
+        findNavController().popBackStack()
+
+//        requireActivity().supportFragmentManager.popBackStack(
+//            GameFragment.NAME,
+//            POP_BACK_STACK_INCLUSIVE
+//        )
         // 0 чтобы не удалить фрагменты не включительно
+
     }
 
     private fun getResultImageResource(): Int {
