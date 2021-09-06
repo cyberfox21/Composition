@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import com.tatyanashkolnik.composer.R
 import com.tatyanashkolnik.composer.databinding.FragmentGameResultBinding
 import com.tatyanashkolnik.composer.domain.entity.GameResult
 import java.lang.RuntimeException
@@ -34,16 +35,12 @@ class GameResultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher // хотим повесить слушатель на кнопку назад
-            .addCallback(
-                viewLifecycleOwner,
-                object : OnBackPressedCallback(true) { // очень важно добавить
-                    override fun handleOnBackPressed() {  // viewLifecycleOwner чтобы когда фрагмент
-                        retryGame()                       // уничтожался, отключался слушатель
-                    }
-                })
-        binding.btnRetry.setOnClickListener { retryGame() }
+        setupClickListeners()
+        inflateViews()
     }
+
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -56,12 +53,60 @@ class GameResultFragment : Fragment() {
         }
     }
 
+    private fun setupClickListeners() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                retryGame()
+            }
+        }
+        requireActivity().onBackPressedDispatcher // хотим повесить слушатель на кнопку назад
+            .addCallback(viewLifecycleOwner,callback) // очень важно добавить viewLifecycleOwner
+                                        //чтобы когда фрагмент уничтожался, отключался слушатель
+        binding.btnRetry.setOnClickListener { retryGame() }
+    }
+
+    private fun inflateViews() {
+        with(binding) {
+            imageView.setImageResource(getResultImageResource())
+            tvRequireRightAnswerCount.text = String.format(
+                resources.getString(R.string.required_score),
+                gameResult.gameSettings.minCountOfRightAnswers.toString()
+            )
+            tvScore.text = String.format(
+                resources.getString(R.string.score_answers),
+                gameResult.countOfRightAnswers.toString()
+            )
+            tvRequireRightAnswerPercent.text = String.format(
+                resources.getString(R.string.required_percentage),
+                gameResult.gameSettings.minPersentOfRightAnswers.toString()
+            )
+            tvRightAnswerPercent.text = String.format(
+                resources.getString(R.string.score_percentage),
+                getRightAnswersPersent().toString()
+            )
+        }
+    }
+
     private fun retryGame() {
         requireActivity().supportFragmentManager.popBackStack(
             GameFragment.NAME,
             POP_BACK_STACK_INCLUSIVE
         )
         // 0 чтобы не удалить фрагменты не включительно
+    }
+
+    private fun getResultImageResource(): Int {
+        return when (gameResult.winner) {
+            true -> R.drawable.winner
+            false -> R.drawable.loser
+        }
+    }
+
+    private fun getRightAnswersPersent(): Int {
+        val right = gameResult.countOfRightAnswers.toDouble()
+        val count = gameResult.countOfQuestions
+        if(count == 0) return 0
+        return ((right / count) * 100).toInt()
     }
 
     companion object {
