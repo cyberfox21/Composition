@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/AndroidStudioProjects/Composer/app/src/main/res/layout/activity_main.xml" value="0.17831813576494426" />
+        <entry key="..\:/Android/AndroidStudioProjects/Composer/app/src/main/res/layout/fragment_choose_level.xml" value="0.1334853090172239" />
+        <entry key="..\:/Android/AndroidStudioProjects/Composer/app/src/main/res/layout/fragment_game.xml" value="0.23262279888785914" />
+        <entry key="..\:/Android/AndroidStudioProjects/Composer/app/src/main/res/layout/fragment_game_result.xml" value="0.1334853090172239" />
+        <entry key="..\:/Android/AndroidStudioProjects/Composer/app/src/main/res/layout/fragment_introduction.xml" value="0.1334853090172239" />
       </map>
     </option>
   </component>

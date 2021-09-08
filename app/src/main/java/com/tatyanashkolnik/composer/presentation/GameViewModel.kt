@@ -77,7 +77,7 @@ class GameViewModel(
 
     private fun getGameSettings(level: Level) {
         this.gameSettings = getGameSettingsUseCase(level)// или getGameSettingsUseCase.invoke(level)
-        _minPercent.value = gameSettings.minPersentOfRightAnswers // secondary progress (серый)
+        _minPercent.value = gameSettings.minPercentOfRightAnswers // secondary progress (серый)
     }
 
     private fun startTimer() {
@@ -118,7 +118,7 @@ class GameViewModel(
         _enoughCount.value =
             countOfRightAnswers >= gameSettings.minCountOfRightAnswers
         _enoughPercent.value =
-            percent >= gameSettings.minPersentOfRightAnswers
+            percent >= gameSettings.minPercentOfRightAnswers
     }
 
     private fun calculatePercentOfRightAnswers(): Int {

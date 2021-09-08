@@ -42,20 +42,21 @@ class GameResultFragment : Fragment() {
     }
 
     private fun inflateViews() {
+        binding.gameResult = args.gameResult
         with(binding) {
             imageView.setImageResource(getResultImageResource())
-            tvRequireRightAnswerCount.text = String.format(
-                resources.getString(R.string.required_score),
-                args.gameResult.gameSettings.minCountOfRightAnswers.toString()
-            )
-            tvScore.text = String.format(
-                resources.getString(R.string.score_answers),
-                args.gameResult.countOfRightAnswers.toString()
-            )
-            tvRequireRightAnswerPercent.text = String.format(
-                resources.getString(R.string.required_percentage),
-                args.gameResult.gameSettings.minPersentOfRightAnswers.toString()
-            )
+//            tvRequireRightAnswerCount.text = String.format(
+//                resources.getString(R.string.required_score),
+//                args.gameResult.gameSettings.minCountOfRightAnswers.toString()
+//            )
+//            tvScore.text = String.format(
+//                resources.getString(R.string.score_answers),
+//                args.gameResult.countOfRightAnswers.toString()
+//            )
+//            tvRequireRightAnswerPercent.text = String.format(
+//                resources.getString(R.string.required_percentage),
+//                args.gameResult.gameSettings.minPercentOfRightAnswers.toString()
+//            )
             tvRightAnswerPercent.text = String.format(
                 resources.getString(R.string.score_percentage),
                 getRightAnswersPersent().toString()
