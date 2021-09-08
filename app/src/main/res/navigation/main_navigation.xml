@@ -29,9 +29,16 @@
             app:destination="@id/gameResultFragment"
             app:popUpTo="@id/gameFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="level"
+            app:argType="com.tatyanashkolnik.composer.domain.entity.Level" />
     </fragment>
     <fragment
         android:id="@+id/gameResultFragment"
         android:name="com.tatyanashkolnik.composer.presentation.GameResultFragment"
-        android:label="GameResultFragment" />
+        android:label="GameResultFragment" >
+        <argument
+            android:name="gameResult"
+            app:argType="com.tatyanashkolnik.composer.domain.entity.GameResult" />
+    </fragment>
 </navigation>

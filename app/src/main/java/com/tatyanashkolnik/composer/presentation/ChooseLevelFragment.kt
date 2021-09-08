@@ -27,7 +27,7 @@ class ChooseLevelFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(binding){
+        with(binding) {
             btnTestLvl.setOnClickListener { launchGameFragment(Level.TEST) }
             btnEasyLvl.setOnClickListener { launchGameFragment(Level.EASY) }
             btnNormalLvl.setOnClickListener { launchGameFragment(Level.NORMAL) }
@@ -41,10 +41,11 @@ class ChooseLevelFragment : Fragment() {
     }
 
     private fun launchGameFragment(level: Level) {
-        val args = Bundle().apply {
-            putParcelable(GameFragment.KEY_LEVEL, level)
-        }
-        findNavController().navigate(R.id.action_chooseLevelFragment_to_gameFragment, args)
+        findNavController().navigate(
+            ChooseLevelFragmentDirections.actionChooseLevelFragmentToGameFragment(
+                level
+            )
+        )
     }
 
     companion object {
