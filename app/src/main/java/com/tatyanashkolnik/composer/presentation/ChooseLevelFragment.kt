@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.tatyanashkolnik.composer.R
 import com.tatyanashkolnik.composer.databinding.FragmentChooseLevelBinding
 import com.tatyanashkolnik.composer.domain.entity.Level
-import java.lang.RuntimeException
 
 class ChooseLevelFragment : Fragment() {
 
@@ -47,15 +45,4 @@ class ChooseLevelFragment : Fragment() {
             )
         )
     }
-
-    companion object {
-
-        const val NAME = "ChooseLevelFragment"
-
-        fun newInstance(): ChooseLevelFragment {
-            return ChooseLevelFragment()
-        }
-
-    }
-
 }

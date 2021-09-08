@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.tatyanashkolnik.composer.R
-import com.tatyanashkolnik.composer.databinding.FragmentGameResultBinding
 import com.tatyanashkolnik.composer.databinding.FragmentIntroductionBinding
-import java.lang.RuntimeException
 
 class IntroductionFragment : Fragment() {
 

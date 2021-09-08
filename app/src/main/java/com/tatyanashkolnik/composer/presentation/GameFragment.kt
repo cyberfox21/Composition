@@ -1,6 +1,5 @@
 package com.tatyanashkolnik.composer.presentation
 
-import android.app.Application
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -11,19 +10,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.*
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.tatyanashkolnik.composer.R
 import com.tatyanashkolnik.composer.databinding.FragmentGameBinding
 import com.tatyanashkolnik.composer.domain.entity.GameResult
-import com.tatyanashkolnik.composer.domain.entity.Level
 import com.tatyanashkolnik.composer.domain.entity.Question
-import java.lang.RuntimeException
 
 class GameFragment : Fragment() {
-
-//    private lateinit var level: Level
 
 //    private val args = GameFragmentArgs.fromBundle(requireArguments()) 1 способ
 
@@ -54,11 +47,6 @@ class GameFragment : Fragment() {
     private var _binding: FragmentGameBinding? = null
     private val binding: FragmentGameBinding
         get() = _binding ?: throw RuntimeException("FragmentGameBinding = null")
-
-//    override fun onCreate(savedInstanceState: Bundle?) { теперь передаем аргументы в safeArgs
-//        super.onCreate(savedInstanceState)
-//        parseArgs()
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -166,12 +154,6 @@ class GameFragment : Fragment() {
         }
     }
 
-//    private fun parseArgs() {
-//        requireArguments().getParcelable<Level>(KEY_LEVEL)?.let {
-//            level = it
-//        }
-//    }
-
     private fun launchGameResultFragment(gameResult: GameResult) {
         findNavController().navigate(
             GameFragmentDirections.actionGameFragmentToGameResultFragment(
@@ -183,20 +165,5 @@ class GameFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-
-        const val NAME = "GameFragment"
-        const val KEY_LEVEL = "level"
-
-        fun newInstance(level: Level): GameFragment {
-            return GameFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(KEY_LEVEL, level)// enum неявно реализует интерфейс Serializable
-                }
-            }
-        }
-
     }
 }

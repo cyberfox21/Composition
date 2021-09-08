@@ -16,8 +16,9 @@ import com.tatyanashkolnik.composer.domain.usecase.GetGameSettingsUseCase
 
 class GameViewModel(
     private val level: Level,
-    private val application: Application) :
-    ViewModel() { // нужен контекст чтобы подтянуть строку из ресурсов
+    private val application: Application
+) : // нужен контекст чтобы подтянуть строку из ресурсов
+    ViewModel() {
 
     private lateinit var gameSettings: GameSettings
 
@@ -121,7 +122,7 @@ class GameViewModel(
     }
 
     private fun calculatePercentOfRightAnswers(): Int {
-        if(countOfQuestions == 0) return 0
+        if (countOfQuestions == 0) return 0
         return ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
     }
 
