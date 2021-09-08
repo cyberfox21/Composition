@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.tatyanashkolnik.composer.R
+import androidx.navigation.fragment.findNavController
 import com.tatyanashkolnik.composer.databinding.FragmentChooseLevelBinding
 import com.tatyanashkolnik.composer.domain.entity.Level
-import java.lang.RuntimeException
 
 class ChooseLevelFragment : Fragment() {
 
@@ -26,7 +25,7 @@ class ChooseLevelFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(binding){
+        with(binding) {
             btnTestLvl.setOnClickListener { launchGameFragment(Level.TEST) }
             btnEasyLvl.setOnClickListener { launchGameFragment(Level.EASY) }
             btnNormalLvl.setOnClickListener { launchGameFragment(Level.NORMAL) }
@@ -40,20 +39,10 @@ class ChooseLevelFragment : Fragment() {
     }
 
     private fun launchGameFragment(level: Level) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .addToBackStack(GameFragment.NAME) // не текущий фрагмент, а тот, который запускаем
-            .replace(R.id.main_container, GameFragment.newInstance(level))
-            .commit()
+        findNavController().navigate(
+            ChooseLevelFragmentDirections.actionChooseLevelFragmentToGameFragment(
+                level
+            )
+        )
     }
-
-    companion object {
-
-        const val NAME = "ChooseLevelFragment"
-
-        fun newInstance(): ChooseLevelFragment {
-            return ChooseLevelFragment()
-        }
-
-    }
-
 }

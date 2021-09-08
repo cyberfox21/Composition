@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.tatyanashkolnik.composer.R
-import com.tatyanashkolnik.composer.databinding.FragmentGameResultBinding
 import com.tatyanashkolnik.composer.databinding.FragmentIntroductionBinding
-import java.lang.RuntimeException
 
 class IntroductionFragment : Fragment() {
 
@@ -32,10 +31,7 @@ class IntroductionFragment : Fragment() {
     }
 
     private fun launchChooseLevelFragment() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .addToBackStack(ChooseLevelFragment.NAME)
-            .replace(R.id.main_container, ChooseLevelFragment.newInstance())
-            .commit()
+        findNavController().navigate(R.id.action_introductionFragment_to_chooseLevelFragment)
     }
 
     override fun onDestroyView() {

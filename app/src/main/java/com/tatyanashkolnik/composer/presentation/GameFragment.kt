@@ -1,6 +1,5 @@
 package com.tatyanashkolnik.composer.presentation
 
-import android.app.Application
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -11,20 +10,20 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.*
-import com.tatyanashkolnik.composer.R
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.tatyanashkolnik.composer.databinding.FragmentGameBinding
 import com.tatyanashkolnik.composer.domain.entity.GameResult
-import com.tatyanashkolnik.composer.domain.entity.Level
 import com.tatyanashkolnik.composer.domain.entity.Question
-import java.lang.RuntimeException
 
 class GameFragment : Fragment() {
 
-    private lateinit var level: Level
+//    private val args = GameFragmentArgs.fromBundle(requireArguments()) 1 способ
+
+    private val args by navArgs<GameFragmentArgs>() // 2 способ
 
     private val gameViewModelFactory by lazy {
-        GameViewModelFactory(level, requireActivity().application)
+        GameViewModelFactory(args.level, requireActivity().application)
     }
 
     private val gameViewModel by lazy { // ленивая инициализация
@@ -48,11 +47,6 @@ class GameFragment : Fragment() {
     private var _binding: FragmentGameBinding? = null
     private val binding: FragmentGameBinding
         get() = _binding ?: throw RuntimeException("FragmentGameBinding = null")
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseArgs()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,8 +77,8 @@ class GameFragment : Fragment() {
 
     private fun observeViewModel() {
         // устанавливаем время таймера
-        gameViewModel.formattedTime.observe(viewLifecycleOwner){
-                binding.tvTime.text = it
+        gameViewModel.formattedTime.observe(viewLifecycleOwner) {
+            binding.tvTime.text = it
         }
 
         // устанавливаем данные задания: сумму, видимое число и варианты ответы
@@ -104,7 +98,7 @@ class GameFragment : Fragment() {
 
         // устанавливваем текст строки прогресса
         gameViewModel.progressAnswers.observe(viewLifecycleOwner) { str ->
-                str?.let { binding.tvProgress.text = it }
+            str?.let { binding.tvProgress.text = it }
         }
 
         // меняем цвет строки прогресса
@@ -160,37 +154,16 @@ class GameFragment : Fragment() {
         }
     }
 
-    private fun parseArgs() {
-        requireArguments().getParcelable<Level>(KEY_LEVEL)?.let {
-            level = it
-        }
-    }
-
     private fun launchGameResultFragment(gameResult: GameResult) {
-        val fragment = GameResultFragment.newInstance(gameResult)
-        requireActivity().supportFragmentManager.beginTransaction()
-            .addToBackStack(null)
-            .replace(R.id.main_container, fragment)
-            .commit()
+        findNavController().navigate(
+            GameFragmentDirections.actionGameFragmentToGameResultFragment(
+                gameResult
+            )
+        )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-
-        const val NAME = "GameFragment"
-        const val KEY_LEVEL = "level"
-
-        fun newInstance(level: Level): GameFragment {
-            return GameFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(KEY_LEVEL, level)// enum неявно реализует интерфейс Serializable
-                }
-            }
-        }
-
     }
 }
