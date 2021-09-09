@@ -1,6 +1,10 @@
 package com.tatyanashkolnik.composer.presentation
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.tatyanashkolnik.composer.R
@@ -21,8 +25,8 @@ fun bindYourScore(tv: TextView, count: Int) {
 }
 
 @BindingAdapter("requiredPercent")
-fun bindRequiredPercent(tv: TextView, count: Int) {
-    tv.text = String.format(tv.context.resources.getString(R.string.required_percentage), count)
+fun bindRequiredPercent(tv: TextView, percent: Int) {
+    tv.text = String.format(tv.context.resources.getString(R.string.required_percentage), percent)
 }
 
 @BindingAdapter("yourPercent")
@@ -50,4 +54,46 @@ private fun getResultImageResource(win: Boolean): Int {
         true -> R.drawable.winner
         false -> R.drawable.loser
     }
+}
+
+
+
+@BindingAdapter("intToString")
+fun bindIntToString(tv: TextView, int: Int) {
+    tv.text = int.toString()
+}
+
+@BindingAdapter("progressBar")
+fun bindProgressBar(pb: ProgressBar, progressValue : Int){
+    pb.setProgress(progressValue, true)
+}
+
+interface OnOptionClickListener{           // чтобы передать в макет функцию,
+    fun onOptionClick(answer: Int)         // которую мы будем вызывать у viewmodel
+}
+
+@BindingAdapter("optionClickListener")
+fun onOptionClickListener(tv: TextView, clickListener: OnOptionClickListener){
+    tv.setOnClickListener {
+        clickListener.onOptionClick(tv.text.toString().toInt())
+    }
+}
+
+private fun calculateColor(expression: Boolean): Int {
+    return when (expression) {
+        true -> Color.GREEN
+        false -> Color.RED
+    }
+}
+
+@BindingAdapter("enoughCount")
+fun enoughCount(tv: TextView, enoughCount: Boolean){
+    val color = calculateColor(enoughCount)
+    tv.setTextColor(color)
+}
+
+@BindingAdapter("enoughPercent")
+fun enoughPercent(pb : ProgressBar, enoughPercent: Boolean){
+    val color = calculateColor(enoughPercent)
+    pb.progressTintList = ColorStateList.valueOf(color)
 }

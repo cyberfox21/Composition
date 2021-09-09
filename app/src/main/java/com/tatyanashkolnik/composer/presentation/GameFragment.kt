@@ -32,17 +32,17 @@ class GameFragment : Fragment() {
             gameViewModelFactory
         )[GameViewModel::class.java]
     }
-
-    private val tvOptions by lazy { // если бы мы оставили знак присваивания, то
-        mutableListOf<TextView>().apply {  // то этой переменной будет присвоено значение сразу же
-            add(binding.tvOption1) // и мы обратимся к view до вызова onViewCreated, будет крэш
-            add(binding.tvOption2) // поэтому by lazy
-            add(binding.tvOption3)
-            add(binding.tvOption4)
-            add(binding.tvOption5)
-            add(binding.tvOption6)
-        }
-    }
+//
+//    private val tvOptions by lazy { // если бы мы оставили знак присваивания, то
+//        mutableListOf<TextView>().apply {  // то этой переменной будет присвоено значение сразу же
+//            add(binding.tvOption1) // и мы обратимся к view до вызова onViewCreated, будет крэш
+//            add(binding.tvOption2) // поэтому by lazy
+//            add(binding.tvOption3)
+//            add(binding.tvOption4)
+//            add(binding.tvOption5)
+//            add(binding.tvOption6)
+//        }
+//    }
 
     private var _binding: FragmentGameBinding? = null
     private val binding: FragmentGameBinding
@@ -59,7 +59,10 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setClickListeners()
+//        setClickListeners()
+
+        binding.viewModel = gameViewModel // !!!!!!! очень важно !!!!!!!
+        binding.lifecycleOwner = viewLifecycleOwner // !!!!!!! очень важно !!!!!!!
 
         observeViewModel()
 
@@ -67,76 +70,76 @@ class GameFragment : Fragment() {
 
     }
 
-    private fun setClickListeners() {
-        for (option in tvOptions) {
-            option.setOnClickListener {
-                gameViewModel.chooseAnswer(option.text.toString().toInt())
-            }
-        }
-    }
+//    private fun setClickListeners() {
+//        for (option in tvOptions) {
+//            option.setOnClickListener {
+//                gameViewModel.chooseAnswer(option.text.toString().toInt())
+//            }
+//        }
+//    }
 
     private fun observeViewModel() {
-        // устанавливаем время таймера
-        gameViewModel.formattedTime.observe(viewLifecycleOwner) {
-            binding.tvTime.text = it
-        }
-
-        // устанавливаем данные задания: сумму, видимое число и варианты ответы
-        gameViewModel.question.observe(viewLifecycleOwner, object : Observer<Question> {
-            override fun onChanged(t: Question?) {
-                t?.let {
-                    with(binding) {
-                        tvSum.text = it.sum.toString()
-                        tvVisibleNumber.text = it.visibleNumber.toString()
-                        for (i in 0 until tvOptions.size) {
-                            tvOptions[i].text = it.options[i].toString()
-                        }
-                    }
-                }
-            }
-        })
-
-        // устанавливваем текст строки прогресса
-        gameViewModel.progressAnswers.observe(viewLifecycleOwner) { str ->
-            str?.let { binding.tvProgress.text = it }
-        }
-
-        // меняем цвет строки прогресса
-        gameViewModel.enoughCount.observe(viewLifecycleOwner, object : Observer<Boolean> {
-            override fun onChanged(t: Boolean?) {
-                t?.let {
-                    with(binding) {
-                        val color = calculateColor(it)
-                        tvProgress.setTextColor(color)
-                    }
-                }
-            }
-
-        })
-
-        // устанавливаем прогресс в ProgressBar
-        gameViewModel.percentOfRightAnswers.observe(viewLifecycleOwner, object : Observer<Int> {
-            override fun onChanged(t: Int?) {
-                t?.let { binding.progressBar.setProgress(it, true) }
-            }
-        })
-
-        // устанавливаем secondary progress в ProgressBar
-        gameViewModel.minPercent.observe(viewLifecycleOwner, object : Observer<Int> {
-            override fun onChanged(t: Int?) {
-                t?.let { binding.progressBar.secondaryProgress = it }
-            }
-        })
-
-        // меняем цвет ProgressBar
-        gameViewModel.enoughPercent.observe(viewLifecycleOwner, object : Observer<Boolean> {
-            override fun onChanged(t: Boolean?) {
-                t?.let {
-                    val color = calculateColor(it)
-                    binding.progressBar.progressTintList = ColorStateList.valueOf(color)
-                }
-            }
-        })
+//        // устанавливаем время таймера
+//        gameViewModel.formattedTime.observe(viewLifecycleOwner) {
+//            binding.tvTime.text = it
+//        }
+//
+//        // устанавливаем данные задания: сумму, видимое число и варианты ответы
+//        gameViewModel.question.observe(viewLifecycleOwner, object : Observer<Question> {
+//            override fun onChanged(t: Question?) {
+//                t?.let {
+//                    with(binding) {
+//                        tvSum.text = it.sum.toString()
+//                        tvVisibleNumber.text = it.visibleNumber.toString()
+//                        for (i in 0 until tvOptions.size) {
+//                            tvOptions[i].text = it.options[i].toString()
+//                        }
+//                    }
+//                }
+//            }
+//        })
+//
+//        // устанавливваем текст строки прогресса
+//        gameViewModel.progressAnswers.observe(viewLifecycleOwner) { str ->
+//            str?.let { binding.tvProgress.text = it }
+//        }
+//
+//        // меняем цвет строки прогресса
+//        gameViewModel.enoughCount.observe(viewLifecycleOwner, object : Observer<Boolean> {
+//            override fun onChanged(t: Boolean?) {
+//                t?.let {
+//                    with(binding) {
+//                        val color = calculateColor(it)
+//                        tvProgress.setTextColor(color)
+//                    }
+//                }
+//            }
+//
+//        })
+//
+//        // устанавливаем прогресс в ProgressBar
+//        gameViewModel.percentOfRightAnswers.observe(viewLifecycleOwner, object : Observer<Int> {
+//            override fun onChanged(t: Int?) {
+//                t?.let { binding.progressBar.setProgress(it, true) }
+//            }
+//        })
+//
+//        // устанавливаем secondary progress в ProgressBar
+//        gameViewModel.minPercent.observe(viewLifecycleOwner, object : Observer<Int> {
+//            override fun onChanged(t: Int?) {
+//                t?.let { binding.progressBar.secondaryProgress = it }
+//            }
+//        })
+//
+//        // меняем цвет ProgressBar
+//        gameViewModel.enoughPercent.observe(viewLifecycleOwner, object : Observer<Boolean> {
+//            override fun onChanged(t: Boolean?) {
+//                t?.let {
+//                    val color = calculateColor(it)
+//                    binding.progressBar.progressTintList = ColorStateList.valueOf(color)
+//                }
+//            }
+//        })
 
         // генерируем GameResult и открываем GameFragment
         gameViewModel.gameResult.observe(viewLifecycleOwner, object : Observer<GameResult> {
@@ -147,12 +150,12 @@ class GameFragment : Fragment() {
         })
     }
 
-    private fun calculateColor(expression: Boolean): Int {
-        return when (expression) {
-            true -> Color.GREEN
-            false -> Color.RED
-        }
-    }
+//    private fun calculateColor(expression: Boolean): Int {
+//        return when (expression) {
+//            true -> Color.GREEN
+//            false -> Color.RED
+//        }
+//    }
 
     private fun launchGameResultFragment(gameResult: GameResult) {
         findNavController().navigate(
