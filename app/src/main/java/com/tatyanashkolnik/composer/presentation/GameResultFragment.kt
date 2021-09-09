@@ -29,7 +29,7 @@ class GameResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
-        inflateViews()
+        binding.gameResult = args.gameResult
     }
 
     override fun onDestroyView() {
@@ -41,52 +41,12 @@ class GameResultFragment : Fragment() {
         binding.btnRetry.setOnClickListener { retryGame() }
     }
 
-    private fun inflateViews() {
-        binding.gameResult = args.gameResult
-        with(binding) {
-            imageView.setImageResource(getResultImageResource())
-//            tvRequireRightAnswerCount.text = String.format(
-//                resources.getString(R.string.required_score),
-//                args.gameResult.gameSettings.minCountOfRightAnswers.toString()
-//            )
-//            tvScore.text = String.format(
-//                resources.getString(R.string.score_answers),
-//                args.gameResult.countOfRightAnswers.toString()
-//            )
-//            tvRequireRightAnswerPercent.text = String.format(
-//                resources.getString(R.string.required_percentage),
-//                args.gameResult.gameSettings.minPercentOfRightAnswers.toString()
-//            )
-            tvRightAnswerPercent.text = String.format(
-                resources.getString(R.string.score_percentage),
-                getRightAnswersPersent().toString()
-            )
-        }
-    }
-
     private fun retryGame() {
         findNavController().popBackStack()
-
 //        requireActivity().supportFragmentManager.popBackStack(
 //            GameFragment.NAME,
 //            POP_BACK_STACK_INCLUSIVE
 //        )
         // 0 чтобы не удалить фрагменты не включительно
-
     }
-
-    private fun getResultImageResource(): Int {
-        return when (args.gameResult.winner) {
-            true -> R.drawable.winner
-            false -> R.drawable.loser
-        }
-    }
-
-    private fun getRightAnswersPersent(): Int {
-        val right = args.gameResult.countOfRightAnswers.toDouble()
-        val count = args.gameResult.countOfQuestions
-        if (count == 0) return 0
-        return ((right / count) * 100).toInt()
-    }
-
 }

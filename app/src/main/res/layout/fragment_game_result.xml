@@ -22,7 +22,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/winner" />
+            app:humanImage="@{gameResult.winner}"
+            tools:srcCompat="@drawable/winner" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -40,7 +41,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="20dp"
-                android:text="@{gameResult.gameSettings.minCountOfRightAnswersString}" />
+                app:requiredAnswers="@{gameResult.gameSettings.minCountOfRightAnswers}" />
 
             <TextView
                 android:id="@+id/tv_score"
@@ -49,7 +50,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="20dp"
-                android:text="@{gameResult.countOfRightAnswersString}" />
+                app:yourScore="@{gameResult.countOfRightAnswers}" />
 
             <TextView
                 android:id="@+id/tv_require_right_answer_percent"
@@ -58,7 +59,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="20dp"
-                android:text="@{gameResult.gameSettings.minPercentOfRightAnswersString}" />
+                app:requiredPercent="@{gameResult.gameSettings.minPercentOfRightAnswers}" />
 
             <TextView
                 android:id="@+id/tv_right_answer_percent"
@@ -67,7 +68,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/score_percentage" />
+                app:yourPercent="@{gameResult}" />
 
         </LinearLayout>
 
